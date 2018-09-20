@@ -7,8 +7,8 @@ function New-SpiceworksSession {
         [switch]$UseHTTPS,
         [Nullable[int]]$Port
     )
-    if (-not $Script:SpiceworksSessions){
-        $Script:SpiceworksSessions = [System.Collections.ArrayList]::new()
+    if (-not $Global:SpiceworksSessions){
+        $Global:SpiceworksSessions = [System.Collections.ArrayList]::new()
     }
     
     $NewSession = [spiceworkssession]::new($server,$Credential,[bool]$UseHTTPS,[int]$Port)

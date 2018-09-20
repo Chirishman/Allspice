@@ -3,5 +3,5 @@ function Get-SpiceworksSession {
         [Parameter()]
         [int]$id
     )
-    $Script:SpiceworksSessions | ?{$_.id -match $id}
+    $Global:SpiceworksSessions | ?{$_.id -match $id}
 }

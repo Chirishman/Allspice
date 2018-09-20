@@ -9,10 +9,10 @@ function Get-SpiceworksTicketPage {
         [String]$State = 'open'
     )
 
-    if (-not $WebSession) {
-		$WebSession = Initialize-SpiceworksConnection -uri (-join($Uri.GetLeftPart(1),'/pro_users')) -Credential $Credential
+    if (-not ($Session.State -eq 'Connected')) {
+		$Session.Connect()
     }
 
-    (Invoke-WebRequest -Uri (-join($Uri.GetLeftPart(1),"/api/tickets.json?filter=",$State,"&page=",$count.Value)) -WebSession $WebSession).Content | ConvertFrom-Json
+    (Invoke-WebRequest -Uri ($Session.TicketQueryUri -f @($State,$count.Value)) -WebSession $Session.WebSession).Content | ConvertFrom-Json
 	$count.value++
 }

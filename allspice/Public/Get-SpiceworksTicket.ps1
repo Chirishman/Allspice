@@ -7,7 +7,7 @@ function Get-SpiceworksTicket {
         [int[]]$TicketNumber
     )
 
-	if (-not $Session.State = 'Connected') {
+	if (-not ($Session.State -eq 'Connected')) {
 		$Session.Connect()
     }
 

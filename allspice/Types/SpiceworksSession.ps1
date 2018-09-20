@@ -37,10 +37,10 @@ class SpiceworksSession {
         return $this.CreateURI($null,$null)
     }
     hidden [void] NewSession([string]$server,[pscredential]$credential,[bool]$UseHTTPS,[Nullable[int]]$port){
-        if (-not $Script:SpiceworksSessions){
-            $Script:SpiceworksSessions = [System.Collections.ArrayList]::new()
+        if (-not $Global:SpiceworksSessions){
+            $Global:SpiceworksSessions = [System.Collections.ArrayList]::new()
         }
-        $this.Id = $Script:SpiceworksSessions.Count;
+        $this.Id = $Global:SpiceworksSessions.Count;
         $this.Server = $server
         $this.UseHTTPS = $UseHTTPS
         $this.Port = $port
@@ -50,7 +50,7 @@ class SpiceworksSession {
         $this.TicketDetailUri = $this.CreateURI('/api/tickets/{0}.json')
         $this.credential = $credential
 
-        [void]$Script:SpiceworksSessions.Add($this)
+        [void]$Global:SpiceworksSessions.Add($this)
     }
 
     SpiceworksSession([string]$server,[pscredential]$credential,[bool]$UseHTTPS,[int]$port){

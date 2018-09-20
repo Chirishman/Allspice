@@ -81,7 +81,7 @@ function Import-SpiceworksTicketSet {
 		ExcludeProperty = @('assigned_to','creator','assignee','closed_at','created_at','due_at','updated_at','statusupdated_at','viewed_at','due_date','comments')
 	}
 
-    if (-not $Session.State = 'Connected') {
+    if (-not ($Session.State -eq 'Connected')) {
 		$Session.Connect()
     }
 
