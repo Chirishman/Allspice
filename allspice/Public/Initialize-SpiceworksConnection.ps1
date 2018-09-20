@@ -55,6 +55,7 @@ function Initialize-SpiceworksConnection {
 	# 1.) Can't use $r.Forms[0].Fields[*] because it returns the "id" on form inputs, but "name" inputs are passed to POST
 	# 2.) Can't use a dictionary object as it sends data in incorrect order in the POST
 	# 3.) Plain string works - pickaxe and both btn inputs are not necessary but there to match fiddler capture of browser
+	<#
 	$formFieldsText = "authenticity_token=" + [System.Net.WebUtility]::UrlEncode($r.Forms[0].Fields["authenticity_token"]) + `
 						"&_pickaxe=%E2%B8%95" + ` # Go figure, it's an actual pickaxe in unicode
 						#"&user%5Bemail%5D=" + [System.Net.WebUtility]::UrlEncode($Credential.UserName) + `
@@ -62,7 +63,8 @@ function Initialize-SpiceworksConnection {
 						#"&user%5Bpassword%5D=" + [System.Net.WebUtility]::UrlEncode($Credential.GetNetworkCredential().Password) + `
 						"&pro_user%5Bpassword%5D=" + [System.Net.WebUtility]::UrlEncode($Credential.GetNetworkCredential().Password) + `
 						"&btn=login&btn=login"
-
+	#>
+	$formFieldsText = "authenticity_token={0}&_pickaxe=%E2%B8%95&pro_user%5Bemail%5D={1}&pro_user%5Bpassword%5D={2}&btn=login&btn=login" -f (@($r.Forms[0].Fields["authenticity_token"],$Credential.UserName,$Credential.GetNetworkCredential().Password)|%{[System.Net.WebUtility]::UrlEncode($_)})
 	# Redirection not necessary - cookies get messed up between posts unless you manually fix, so we don't follow redirections
 	$session.MaximumRedirection = 0
 
