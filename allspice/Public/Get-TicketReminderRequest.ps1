@@ -1,11 +1,7 @@
 function Get-TicketReminderRequest {
     Param(
-        [Parameter()]
-        [Microsoft.PowerShell.Commands.WebRequestSession]$WebSession,
         [Parameter(Mandatory)]
-        [Uri]$Uri,
-        [Parameter(Mandatory)]
-        [pscredential]$Credential
+        [SpiceworksSession]$Session
     )
 
 	$CommandPattern = '^\!remindme\ '

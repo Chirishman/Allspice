@@ -1,14 +1,10 @@
 function Import-SpiceworksTicketSet {
     Param(
+        [Parameter(Mandatory)]
+        [SpiceworksSession]$Session,
         [Parameter()]
-        [Microsoft.PowerShell.Commands.WebRequestSession]$WebSession,
-        [Parameter(Mandatory)]
-        [Uri]$Uri,
-		[Parameter()]
 		[ValidateSet('open','closed','waiting')]
-        [String]$State = 'open',
-        [Parameter(Mandatory)]
-        [pscredential]$Credential
+        [String]$State = 'open'
     )
 
 	$state = $state.ToLower()
@@ -85,8 +81,8 @@ function Import-SpiceworksTicketSet {
 		ExcludeProperty = @('assigned_to','creator','assignee','closed_at','created_at','due_at','updated_at','statusupdated_at','viewed_at','due_date','comments')
 	}
 
-    if (-not $WebSession) {
-		$WebSession = Initialize-SpiceworksConnection -uri (-join($Uri.GetLeftPart(1),'/pro_users')) -Credential $Credential
+    if (-not $Session.State = 'Connected') {
+		$Session.Connect()
     }
 
 	$count = 1

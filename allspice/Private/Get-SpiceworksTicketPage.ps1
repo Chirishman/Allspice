@@ -1,16 +1,12 @@
 function Get-SpiceworksTicketPage {
     Param(
-        [Parameter()]
-        [Microsoft.PowerShell.Commands.WebRequestSession]$WebSession,
         [Parameter(Mandatory)]
-        [Uri]$Uri,
-		[Parameter(Mandatory)]
+        [SpiceworksSession]$Session,
+        [Parameter(Mandatory)]
         [ref]$Count,
 		[Parameter()]
 		[ValidateSet('open','closed','waiting')]
-        [String]$State = 'open',
-        [Parameter(Mandatory)]
-        [pscredential]$Credential
+        [String]$State = 'open'
     )
 
     if (-not $WebSession) {
